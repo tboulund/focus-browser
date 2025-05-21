@@ -48,6 +48,7 @@
 		</div>
 	</div>
 	<script>
+		const sessionCache = {};
 		function goBack() {
 			const view = document.getElementById('browser');
 			if (view && view.canGoBack()) {
@@ -61,6 +62,23 @@
 				view.goForward();
 			}
 		}
+
+		const browser = document.getElementById('browser');
+
+		browser.addEventListener('did-navigate-in-page', (e) => {
+			const bookmark = browser.dataset.currentBookmark;
+			if (bookmark) {
+				sessionCache[bookmark] = browser.getURL();
+			}
+		});
+
+		browser.addEventListener('did-navigate', (e) => {
+			const bookmark = browser.dataset.currentBookmark;
+			if (bookmark) {
+				sessionCache[bookmark] = browser.getURL();
+			}
+		});
+		
 		window.electronAPI.getBookmarks().then(data => {
 			const container = document.getElementById('bookmarks');
 
@@ -76,7 +94,13 @@
 					const li = document.createElement('li');
 					const button = document.createElement('button');
 					button.textContent = link.name;
-					button.onclick = () => document.getElementById('browser').src = link.url;
+					button.onclick = () => {
+						const targetURL = sessionCache[link.name] || link.url;
+						document.getElementById('browser').src = targetURL;
+
+						// Track current bookmark name for back-saving
+						document.getElementById('browser').dataset.currentBookmark = link.name;
+					}
 					li.appendChild(button);
 					ul.appendChild(li);
 				});
