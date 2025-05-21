@@ -4,19 +4,16 @@ const path = require('path');
 const fs = require('fs');
 
 function createWindow() {
-	console.log('Creating window...');
-	console.log(path.join(__dirname, 'preload.js'));
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    fullscreen: true,
+    autoHideMenuBar: false,
     frame: false,
     webPreferences: {
 		preload: path.join(__dirname, 'preload.js'),  
 		contextIsolation: true,
 		nodeIntegration: true,
 		webviewTag: true // ✅ Add this
-	},
-  });
+	}});
 
   win.loadFile('index.html');
 }

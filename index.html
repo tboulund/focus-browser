@@ -20,36 +20,30 @@
 			margin: 0 0 1em 0;
 		}
 
-		ul {
-			list-style: none;
-			padding: 0;
-		}
-
-		li {
-			margin: 0.5em 0;
-		}
-
-		button {
-			font-size: 1.2em;
-			padding: 0.5em 1em;
+		a.active {
+			background-color: #007acc;
+			color: white;
+			font-weight: bold;
 		}
 	</style>
 </head>
 
 <body>
-	<div style="display: flex; height: 100vh;">
+	<div style="display: flex; height: calc(100vh - 65px);">
 		<div id="bookmarks" style="flex: 0 0 10%; overflow-y: auto; margin-right: 1em;"></div>
-		<div id="browser-container" style="flex: 1 1 85%; height: 100%; border: none;">
+		<div id="browser-container" style="flex: 1 1 85%; height: calc(100% - 20px); border: none;">
 			<div>
 				<button onclick="goBack()">← Back</button>
 				<button onclick="goForward()">Forward →</button>
-				<button onclick="copyURL()">📋 Copy URL</button>
+				<button onclick="copyURL()">Copy URL</button>
+				<button onclick="goHome()">Home</button>
 			</div>
-			<webview id="browser" style="width:100%; height:100%; border:none;"></webview>
+			<webview id="browser" style="width:100%; height: 100%; border:none;"></webview>
 		</div>
 	</div>
 	<script>
 		const sessionCache = {};
+
 		function goBack() {
 			const view = document.getElementById('browser');
 			if (view && view.canGoBack()) {
@@ -61,6 +55,22 @@
 			const view = document.getElementById('browser');
 			if (view && view.canGoForward()) {
 				view.goForward();
+			}
+		}
+
+		function goHome() {
+			const browser = document.getElementById('browser');
+			const bookmarkName = browser.dataset.currentBookmark;
+
+			if (!bookmarkName) return;
+
+			for (const category in originalBookmarks) {
+				const match = originalBookmarks[category].find(link => link.name === bookmarkName);
+				if (match) {
+					browser.src = match.url;
+					sessionCache[bookmarkName] = match.url; // Reset session cache too
+					break;
+				}
 			}
 		}
 
@@ -91,7 +101,10 @@
 			}
 		});
 
+		let activeBookmarkButton = null;
+		let originalBookmarks = {};
 		window.electronAPI.getBookmarks().then(data => {
+			originalBookmarks = data;
 			const container = document.getElementById('bookmarks');
 
 			for (const [category, links] of Object.entries(data)) {
@@ -104,14 +117,21 @@
 				const ul = document.createElement('ul');
 				links.forEach(link => {
 					const li = document.createElement('li');
-					const button = document.createElement('button');
+					const button = document.createElement('a');
+					button.href = "javascript:void(0);";
 					button.textContent = link.name;
 					button.onclick = () => {
 						const targetURL = sessionCache[link.name] || link.url;
 						document.getElementById('browser').src = targetURL;
-
 						// Track current bookmark name for back-saving
 						document.getElementById('browser').dataset.currentBookmark = link.name;
+
+						// Update active button styling
+						if (activeBookmarkButton) {
+							activeBookmarkButton.classList.remove('active');
+						}
+						button.classList.add('active');
+						activeBookmarkButton = button;
 					}
 					li.appendChild(button);
 					ul.appendChild(li);

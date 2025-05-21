@@ -1,4 +1,7 @@
 {
+  "CMS1": [
+    { "name": "Current", "url": "https://moodle.easv.dk/course/view.php?id=5002" }
+  ],
   "CMS2": [
     { "name": "Previous", "url": "https://moodle.easv.dk/course/view.php?id=4304" },
     { "name": "Next", "url": "https://moodle.easv.dk/course/view.php?id=5291" }
