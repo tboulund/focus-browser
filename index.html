@@ -43,6 +43,7 @@
 			<div>
 				<button onclick="goBack()">← Back</button>
 				<button onclick="goForward()">Forward →</button>
+				<button onclick="copyURL()">📋 Copy URL</button>
 			</div>
 			<webview id="browser" style="width:100%; height:100%; border:none;"></webview>
 		</div>
@@ -63,6 +64,17 @@
 			}
 		}
 
+		function copyURL() {
+			const webview = document.getElementById('browser');
+			if (webview && webview.getURL && window.electronAPI && window.electronAPI.copyText) {
+				const url = webview.getURL();
+				window.electronAPI.copyText(url);
+				alert("Copied URL: " + url);
+			} else {
+				console.error("copyText not available");
+			}
+		}
+
 		const browser = document.getElementById('browser');
 
 		browser.addEventListener('did-navigate-in-page', (e) => {
@@ -78,7 +90,7 @@
 				sessionCache[bookmark] = browser.getURL();
 			}
 		});
-		
+
 		window.electronAPI.getBookmarks().then(data => {
 			const container = document.getElementById('bookmarks');
 
