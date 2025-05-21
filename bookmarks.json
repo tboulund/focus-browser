@@ -1,7 +1,7 @@
 {
-  "Work": [
-    { "name": "OpenAI", "url": "https://openai.com" },
-    { "name": "GitHub", "url": "https://github.com" }
+  "CMS2": [
+    { "name": "Previous", "url": "https://moodle.easv.dk/course/view.php?id=4304" },
+    { "name": "Next", "url": "https://moodle.easv.dk/course/view.php?id=5291" }
   ],
   "News": [
     { "name": "Hacker News", "url": "https://news.ycombinator.com" },
