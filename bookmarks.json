@@ -1,4 +1,10 @@
 {
+  "Info-rum": [
+    { "name": "CSe2023", "url": "https://moodle.easv.dk/course/view.php?id=3533" },
+    { "name": "MMDe2024", "url": "https://moodle.easv.dk/course/view.php?id=4098" },
+    { "name": "PBS-F", "url": "https://moodle.easv.dk/course/view.php?id=4959" },
+    { "name": "PBS-3", "url": "https://moodle.easv.dk/course/view.php?id=5025" }
+  ],
   "CMS1": [
     { "name": "Current", "url": "https://moodle.easv.dk/course/view.php?id=5002" }
   ],
@@ -6,11 +12,15 @@
     { "name": "Previous", "url": "https://moodle.easv.dk/course/view.php?id=4304" },
     { "name": "Next", "url": "https://moodle.easv.dk/course/view.php?id=5291" }
   ],
-  "News": [
-    { "name": "Hacker News", "url": "https://news.ycombinator.com" },
-    { "name": "BBC", "url": "https://bbc.com" }
+  "DLS-F": [
+    { "name": "Previous", "url": "https://moodle.easv.dk/course/view.php?id=3745" },
+    { "name": "Current", "url": "https://moodle.easv.dk/course/view.php?id=5015" }
   ],
-  "Reference": [
-    { "name": "MDN Web Docs", "url": "https://developer.mozilla.org" }
+  "DLS-O": [
+    { "name": "Previous", "url": "https://moodle.easv.dk/course/view.php?id=3981" }
+  ],
+  "DevOps": [
+    { "name": "Previous", "url": "https://moodle.easv.dk/course/view.php?id=3744" },
+    { "name": "Current", "url": "https://moodle.easv.dk/course/view.php?id=5014" }
   ]
 }
